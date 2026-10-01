@@ -1,0 +1,45 @@
+Feed ranking pseudocode 
+
+ALGORITHM FeedRanking
+
+INPUT:
+    List of posts
+    User preferences
+
+OUTPUT:
+    Ranked list of posts
+
+BEGIN
+    rankedPosts = empty list
+
+    FOR each post in posts DO
+
+        IF post is not eligible THEN
+            CONTINUE
+        END IF
+
+        likeScore = predictLike(post, user)
+        commentScore = predictComment(post, user)
+        shareScore = predictShare(post, user)
+        watchScore = predictWatch(post, user)
+        authorScore = calculateAuthorAffinity(post, user)
+        recencyScore = calculateRecency(post)
+
+        score = 4 * likeScore
+              + 6 * commentScore
+              + 5 * shareScore
+              + 3 * watchScore
+              + 2 * authorScore
+              + recencyScore
+
+        Add (post, score) to rankedPosts
+
+    END FOR
+
+    SORT rankedPosts by score in descending order
+
+    APPLY diversity rules to rankedPosts
+
+    DISPLAY rankedPosts
+
+END
